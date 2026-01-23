@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفرج - الدراما</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Amiri', serif;
+            background-color: #0B0B0B;
+            color: #E5E5E5;
+        }
+        h1, h2, h3 { font-family: 'Cinzel', serif; }
+    </style>
+</head>
+<div class="text-center mb-16 py-12 relative">
+    <!-- Decorative top line -->
+    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-px" style="background: linear-gradient(to right, transparent, #C9A24D, transparent);"></div>
+    
+    <!-- Main logo -->
+    <h1 class="text-8xl font-black mb-4 tracking-wider" style="color: #C9A24D; font-family: 'Cinzel', serif; text-shadow: 0 0 60px rgba(201,162,77,0.3);">
+        TAFRAJ
+    </h1>
+    
+    <!-- Arabic subtitle -->
+    <p class="text-2xl mb-2" style="color: #C9A24D; opacity: 0.8; font-family: 'Amiri', serif; letter-spacing: 0.3em;">
+        تفـرّج
+    </p>
+    
+    <!-- Tagline -->
+    <p class="text-sm tracking-widest" style="color: #999; letter-spacing: 0.4em;">
+        YOUR DRAMA DESTINATION
+    </p>
+    
+    <!-- Decorative bottom line -->
+    <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-32 h-px" style="background: linear-gradient(to right, transparent, #C9A24D, transparent);"></div>
+</div>
+</div>
+    <!-- Search by title -->
+    <form method="get" class="mb-8">
+        <div class="flex gap-3">
+            <input type="text" name="search" placeholder="ابحث بالعنوان (عربي، إنجليزي، أصلي)..." value="{{ request.GET.search }}" class="flex-1 px-6 py-4 border rounded-lg placeholder-gray-500 focus:outline-none focus:ring-2" style="background-color: #1A1A1A; color: #E5E5E5; border-color: rgba(201,162,77,0.3); --tw-ring-color: #C9A24D;">
+            <button type="submit" class="px-8 py-4 rounded-lg font-bold shadow-lg transition hover:scale-105" style="background-color: #C9A24D; color: #0B0B0B; box-shadow: 0 0 20px rgba(201,162,77,0.3);">بحث</button>
+        </div>
+    </form>
+    
+    <!-- Filters -->
+    <form method="get" class="mb-12">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+        <!-- Country filter -->
+        <select name="country" class="px-4 py-3 border rounded-lg focus:outline-none focus:ring-2" style="background-color: #1A1A1A; color: #E5E5E5; border-color: rgba(201,162,77,0.3); --tw-ring-color: #C9A24D;">
+            <option value="">كل الدول</option>
+            <option value="korean" {% if request.GET.country == 'korean' %}selected{% endif %}>كوري</option>
+            <option value="turkish" {% if request.GET.country == 'turkish' %}selected{% endif %}>تركي</option>
+            <option value="indian" {% if request.GET.country == 'indian' %}selected{% endif %}>هندي</option>
+            <option value="chinese" {% if request.GET.country == 'chinese' %}selected{% endif %}>صيني</option>
+        </select>
+        
+        <!-- Status filter -->
+        <select name="status" class="px-4 py-3 border rounded-lg focus:outline-none focus:ring-2" style="background-color: #1A1A1A; color: #E5E5E5; border-color: rgba(201,162,77,0.3); --tw-ring-color: #C9A24D;">
+            <option value="">كل الحالات</option>
+            <option value="ongoing" {% if request.GET.status == 'ongoing' %}selected{% endif %}>مستمر</option>
+            <option value="completed" {% if request.GET.status == 'completed' %}selected{% endif %}>مكتمل</option>
+        </select>
+        
+        <!-- Genre filter -->
+        <select name="genre" class="px-4 py-3 border rounded-lg focus:outline-none focus:ring-2" style="background-color: #1A1A1A; color: #E5E5E5; border-color: rgba(201,162,77,0.3); --tw-ring-color: #C9A24D;">
+            <option value="">كل الأنواع</option>
+            {% for genre in genres %}
+                <option value="{{ genre.id }}" {% if request.GET.genre == genre.id|stringformat:"s" %}selected{% endif %}>
+                    {{ genre.name_arabic }}
+                </option>
+            {% endfor %}
+        </select>
+        
+        <!-- Year filter -->
+        <select name="year" class="px-4 py-3 border rounded-lg focus:outline-none focus:ring-2" style="background-color: #1A1A1A; color: #E5E5E5; border-color: rgba(201,162,77,0.3); --tw-ring-color: #C9A24D;">
+            <option value="">كل السنوات</option>
+            {% for year in years %}
+                <option value="{{ year }}" {% if request.GET.year == year|stringformat:"s" %}selected{% endif %}>
+                    {{ year }}
+                </option>
+            {% endfor %}
+        </select>
+        </div>
+        
+        <div class="flex gap-3">
+        <button type="submit" class="px-6 py-3 rounded-lg font-bold shadow-lg transition hover:scale-105" style="background-color: #C9A24D; color: #0B0B0B; box-shadow: 0 0 20px rgba(201,162,77,0.3);">فلتر</button>
+        <a href="{% url 'tafarraj:drama_list' %}" class="px-6 py-3 rounded-lg font-bold border transition hover:scale-105" style="background-color: #1A1A1A; color: #C9A24D; border-color: rgba(201,162,77,0.3);">إعادة تعيين</a>
+        </div>
+    </form>
+    
+    <!-- Results count -->
+    <p class="mb-6 text-lg font-semibold" style="color: #C9A24D;">عدد النتائج: {{ dramas.count }}</p>
+    
+    <!-- Drama Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    {% for drama in dramas %}
+        <div class="border rounded-xl overflow-hidden transition-all hover:scale-105 duration-300" style="background: linear-gradient(to bottom, #1A1A1A, #0B0B0B); border-color: rgba(201,162,77,0.3); box-shadow: 0 0 20px rgba(201,162,77,0.1);">
+            
+            {% if drama.thumbnail %}
+            <div class="relative">
+                <img src="{{ drama.thumbnail.url }}" alt="{{ drama.title_arabic }}" class="w-full h-80 object-cover">
+                <div class="absolute top-3 right-3 px-3 py-1 text-xs font-bold rounded-full" style="background-color: #C9A24D; color: #0B0B0B;">
+                    {{ drama.release_year }}
+                </div>
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                    <div class="flex gap-2 flex-wrap">
+                        {% for genre in drama.genres.all|slice:":3" %}
+                        <span class="px-2 py-1 border rounded text-xs" style="background-color: rgba(201,162,77,0.2); border-color: rgba(201,162,77,0.5); color: #C9A24D;">{{ genre.name_arabic }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <div class="p-5">
+                <h2 class="text-2xl font-bold mb-2 line-clamp-2" style="color: #C9A24D;">
+                    {{ drama.title_arabic }}
+                </h2>
+                
+                <p class="text-sm mb-1" style="color: #999;">{{ drama.title }}</p>
+                {% if drama.title_original and drama.title_original != drama.title %}
+                <p class="text-xs mb-3" style="color: #666;">{{ drama.title_original }}</p>
+                {% endif %}
+                
+                <p class="text-sm mb-4 line-clamp-3 leading-relaxed" style="color: #E5E5E5;">{{ drama.description_arabic|truncatewords:15 }}</p>
+                
+                <div class="space-y-2 text-xs mb-4">
+                    <div class="flex justify-between">
+                        <span style="color: #999;">البلد:</span>
+                        <span class="font-semibold" style="color: #C9A24D;">{{ drama.get_country_display }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span style="color: #999;">الحلقات:</span>
+                        <span class="font-semibold" style="color: #C9A24D;">{{ drama.total_episodes }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span style="color: #999;">الحالة:</span>
+                        <span class="font-semibold" style="color: #C9A24D;">{{ drama.get_status_display }}</span>
+                    </div>
+                </div>
+                
+                <a href="{% url 'tafarraj:drama_detail' drama.pk %}" class="block text-center px-4 py-3 rounded-lg font-bold shadow-lg transition hover:scale-105" style="background-color: #C9A24D; color: #0B0B0B; box-shadow: 0 0 20px rgba(201,162,77,0.3);">
+                    شاهد الآن
+                </a>
+            </div>
+        </div>
+    {% empty %}
+        <div class="col-span-full text-center py-20">
+        <p class="text-2xl" style="color: #666;">لا توجد نتائج</p>
+        </div>
+    {% endfor %}
+    </div>
+    
+    </div>
+</body>
+</html>
