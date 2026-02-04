@@ -22,9 +22,9 @@
         
         <div class="border rounded-2xl overflow-hidden shadow-2xl" style="background: linear-gradient(to bottom, #1A1A1A, #0B0B0B); border-color: rgba(201,162,77,0.3);">
             
-            {% if drama.thumbnail %}
+            {% if drama.thumbnail_url %}
             <div class="relative">
-                <img src="{{ drama.thumbnail.url }}" alt="{{ drama.title_arabic }}" class="w-full h-[500px] object-cover">
+                <img src="{{ drama.thumbnail_url }}" alt="{{ drama.title_arabic }}" class="w-full h-[500px] object-cover">
                 <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
                 <div class="absolute bottom-0 left-0 right-0 p-8">
                     <h1 class="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r mb-2" style="background-image: linear-gradient(to right, #C9A24D, #C9A24D); -webkit-background-clip: text; text-shadow: 0 0 30px rgba(201,162,77,0.5);">{{ drama.title_arabic }}</h1>

@@ -51,7 +51,7 @@ def drama_list(request):
         'genres': genres,
         'years': years,
     }
-    return render(request, 'tafarraj/drama_list.html', context)
+    return render(request, 'Tafarraj/drama_list.html', context)
 
 def drama_detail(request, pk):
     """Show single drama with watch links"""
@@ -60,4 +60,4 @@ def drama_detail(request, pk):
     context = {
         'drama': drama,
     }
-    return render(request, 'tafarraj/drama_detail.html', context)
+    return render(request, 'Tafarraj/drama_detail.html', context)

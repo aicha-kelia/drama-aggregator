@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+    <meta name="google-site-verification" content="rvSfM9URqp5fjd0PVsxhABfk8QOzqkiPr3FntTorRk0" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تفرج - الدراما</title>
@@ -58,6 +59,7 @@
             <option value="turkish" {% if request.GET.country == 'turkish' %}selected{% endif %}>تركي</option>
             <option value="indian" {% if request.GET.country == 'indian' %}selected{% endif %}>هندي</option>
             <option value="chinese" {% if request.GET.country == 'chinese' %}selected{% endif %}>صيني</option>
+            <option value="moroccan" {% if request.GET.country == 'moroccan' %}selected{% endif %}>مغربي</option>
         </select>
         
         <!-- Status filter -->
@@ -102,9 +104,9 @@
     {% for drama in dramas %}
         <div class="border rounded-xl overflow-hidden transition-all hover:scale-105 duration-300" style="background: linear-gradient(to bottom, #1A1A1A, #0B0B0B); border-color: rgba(201,162,77,0.3); box-shadow: 0 0 20px rgba(201,162,77,0.1);">
             
-            {% if drama.thumbnail %}
+            {% if drama.thumbnail_url %}
             <div class="relative">
-                <img src="{{ drama.thumbnail.url }}" alt="{{ drama.title_arabic }}" class="w-full h-80 object-cover">
+                <img src="{{ drama.thumbnail_url }}" alt="{{ drama.title_arabic }}" class="w-full h-80 object-cover">
                 <div class="absolute top-3 right-3 px-3 py-1 text-xs font-bold rounded-full" style="background-color: #C9A24D; color: #0B0B0B;">
                     {{ drama.release_year }}
                 </div>

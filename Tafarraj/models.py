@@ -7,7 +7,8 @@ class Drama(models.Model):
     title_original = models.CharField(max_length=200, blank=True)
     
     # Visual
-    thumbnail = models.ImageField(upload_to='thumbnails/')
+    thumbnail = models.ImageField(upload_to='thumbnails/', blank=True, null=True)
+    thumbnail_url = models.URLField(blank=True, null=True)  # ADD THIS
    
     # Details
     description = models.TextField()
@@ -17,6 +18,7 @@ class Drama(models.Model):
     ('turkish', 'تركي'),
     ('indian', 'هندي'),
     ('chinese', 'صيني'),
+    ('moroccan', 'مغربي'),
 ])
 
     
