@@ -8,36 +8,34 @@ class Drama(models.Model):
     
     # Visual
     thumbnail = models.ImageField(upload_to='thumbnails/', blank=True, null=True)
-    thumbnail_url = models.URLField(blank=True, null=True)  # ADD THIS
+    thumbnail_url = models.URLField(blank=True, null=True)
    
     # Details
     description = models.TextField()
     description_arabic = models.TextField(blank=True)
     country = models.CharField(max_length=50, choices=[
-    ('korean', 'كوري'),
-    ('turkish', 'تركي'),
-    ('indian', 'هندي'),
-    ('chinese', 'صيني'),
-    ('moroccan', 'مغربي'),
-])
-
+        ('korean', 'كوري'),
+        ('turkish', 'تركي'),
+        ('japanese', 'ياباني'),
+        ('chinese', 'صيني'),
+        ('moroccan', 'مغربي'),
+    ])
     
     # Episodes
     total_episodes = models.IntegerField()
     episode_duration = models.IntegerField()
     release_year = models.IntegerField()
     status = models.CharField(max_length=20, choices=[
-    ('ongoing', 'مستمر'),
-    ('completed', 'مكتمل'),
-])
+        ('ongoing', 'مستمر'),
+        ('completed', 'مكتمل'),
+    ])
     
     next_episode_date = models.DateTimeField(blank=True, null=True)
-    current_episode_number = models.IntegerField(default=0)  # FIX 1: add default
+    current_episode_number = models.IntegerField(default=0)
     
     # Categories
     genres = models.ManyToManyField('Genre')
     
-    # FIX 2: Add this
     def __str__(self):
         return self.title_arabic or self.title
 
@@ -51,9 +49,7 @@ class WatchLink(models.Model):
         ('english', 'English Subs'),
     ])
     episodes_available = models.IntegerField()
-
     
-    # FIX 3: Add this
     def __str__(self):
         return f"{self.website_name} - {self.drama.title}"
 

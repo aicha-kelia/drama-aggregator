@@ -16,57 +16,68 @@ class Command(BaseCommand):
             title_dash = drama.title.lower().replace(' ', '-')
             title_ar = drama.title_arabic.replace(' ', '+')
             
+            # Normalize country name
+            country = drama.country.lower()
+            if country == 'south korea':
+                country = 'korean'
+            elif country == 'china':
+                country = 'chinese'
+            elif country == 'japan':
+                country = 'japanese'
+            elif country == 'turkey':
+                country = 'turkish'
+            elif country == 'morocco':
+                country = 'moroccan'
+            
             # KOREAN DRAMAS - Sites with Arabic subs
-            if drama.country == 'korean':
+            if country == 'korean':
                 links = [
-                    # FREE Arabic sites (VERIFIED)
-                    {'name': 'Aradrama', 'url': f'https://aradramatv.com/?s={title}'},
-                    {'name': 'Asia2TV', 'url': f'https://asia2tv.com/?s={title}'},
-                    {'name': 'Best-Drama', 'url': f'https://best-drama.com/?s={title}'},
-                    {'name': 'ArabSeed', 'url': f'https://arabseed.show/?s={title_ar}'},
-                    {'name': 'Drama Slayer', 'url': f'https://dramaslayer.net/?s={title}'},
-                    {'name': 'Akwam', 'url': f'https://akwam.to/search?q={title_ar}'},
-                    {'name': 'Shahid', 'url': f'https://shahid.mbc.net/ar/search?q={title}'},
-                    
-                    # Official platforms
-                    {'name': 'Netflix', 'url': f'https://www.netflix.com/search?q={title}'},
-                    {'name': 'Viki', 'url': f'https://www.viki.com/search?q={title}'},
+                    {'name': 'Aradrama', 'url': 'https://aradramatv.cc'},
+                    {'name': 'Asia2TV', 'url': 'https://asia2tv.com'},
+                    {'name': 'Best Drama', 'url': 'https://best-drama.com'},
+                    {'name': 'ArabSeed', 'url': 'https://arabseed.show'},
+                    {'name': 'Akwam', 'url': 'https://akwam.to'},
+                    {'name': 'Viki', 'url': 'https://www.viki.com'},
+                    {'name': 'WeTV', 'url': 'https://wetv.vip/ar'},
+                    {'name': 'HiTV', 'url': 'https://home.hitv.vip/ar-ae/'},
+                    {'name': 'Shahid Mosalsalat', 'url': 'https://w.shahidmosalsalat.me'},
                 ]
             
             # TURKISH DRAMAS - Sites with Arabic subs/dub
-            elif drama.country == 'turkish':
+            elif country == 'turkish':
                 links = [
-                    # FREE Arabic sites (VERIFIED)
-                    {'name': 'قصة عشق', 'url': f'https://3isk.cam/?s={title}'},
-                    {'name': 'Akwam', 'url': f'https://akwam.to/search?q={title_ar}'},
-                    {'name': 'MyCima', 'url': f'https://mycima.tv/search/{title_dash}'},
-                    {'name': 'Shahid', 'url': f'https://shahid.mbc.net/ar/search?q={title_ar}'},
-                    {'name': 'ArabSeed', 'url': f'https://arabseed.show/?s={title_ar}'},
-                    {'name': 'EgyBest', 'url': f'https://egybest.deals/explore/?q={title}'},
-                    
-                    # Official platforms
-                    {'name': 'Netflix', 'url': f'https://www.netflix.com/search?q={title}'},
-                    {'name': 'StarzPlay', 'url': f'https://starzplay.com/en/search?q={title}'},
+                    {'name': 'قصة عشق', 'url': 'https://3sk.cam'},
+                    {'name': 'Qrmzi TV', 'url': 'https://www.qrmzi.tv'},
+                    {'name': 'Akwam', 'url': 'https://akwam.to'},
+                    {'name': 'MyCima', 'url': 'https://wecima.show'},
+                    {'name': 'Shahid Mosalsalat', 'url': 'https://w.shahidmosalsalat.me'},
+                    {'name': 'ArabSeed', 'url': 'https://arabseed.show'},
                 ]
             
             # CHINESE DRAMAS - Sites with Arabic subs
-            elif drama.country == 'chinese':
+            elif country == 'chinese':
                 links = [
-                    # FREE Arabic sites (VERIFIED)
-                    {'name': 'Aradrama', 'url': f'https://aradramatv.com/?s={title}'},
-                    {'name': 'Best-Drama', 'url': f'https://best-drama.com/?s={title}'},
-                    {'name': 'Asia2TV', 'url': f'https://asia2tv.com/?s={title}'},
-                    {'name': 'Akwam', 'url': f'https://akwam.to/search?q={title_ar}'},
-                    {'name': 'ArabSeed', 'url': f'https://arabseed.show/?s={title_ar}'},
-                    
-                    # Official platforms
-                    {'name': 'WeTV', 'url': f'https://wetv.vip/en/search?q={title}'},
-                    {'name': 'iQIYI', 'url': f'https://www.iq.com/search/{title}'},
-                    {'name': 'Netflix', 'url': f'https://www.netflix.com/search?q={title}'},
+                    {'name': 'Aradrama', 'url': 'https://aradramatv.cc'},
+                    {'name': 'Best Drama', 'url': 'https://best-drama.com'},
+                    {'name': 'Asia2TV', 'url': 'https://asia2tv.com'},
+                    {'name': 'WeTV', 'url': 'https://wetv.vip/ar'},
+                    {'name': 'HiTV', 'url': 'https://home.hitv.vip/ar-ae/'},
+                    {'name': 'Viki', 'url': 'https://www.viki.com'},
+                ]
+            
+            # JAPANESE DRAMAS - Sites with Arabic subs
+            elif country == 'japanese':
+                links = [
+                    {'name': 'Aradrama', 'url': 'https://aradramatv.cc'},
+                    {'name': 'Best Drama', 'url': 'https://best-drama.com'},
+                    {'name': 'Asia2TV', 'url': 'https://asia2tv.com'},
+                    {'name': 'HiTV', 'url': 'https://home.hitv.vip/ar-ae/'},
+                    {'name': 'WeTV', 'url': 'https://wetv.vip/ar'},
+                    {'name': 'Viki', 'url': 'https://www.viki.com'},
                 ]
             
             # MOROCCAN DRAMAS - Already in Arabic
-            elif drama.country == 'moroccan':
+            elif country == 'moroccan':
                 links = [
                     # Official platforms
                     {'name': 'Shahid VIP', 'url': f'https://shahid.mbc.net/ar/search?q={title_ar}'},
