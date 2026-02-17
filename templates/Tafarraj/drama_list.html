@@ -4,7 +4,8 @@
     <meta name="google-site-verification" content="rvSfM9URqp5fjd0PVsxhABfk8QOzqkiPr3FntTorRk0" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تفرج - الدراما</title>
+    <title>تفرج - مسلسلات كورية صينية تركية يابانية مغربية</title>
+<meta name="description" content="شاهد أكثر من 2300 مسلسل كوري صيني تركي ياباني مغربي في مكان واحد - تفرج">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -100,7 +101,7 @@
         </form>
         
         <!-- Results count -->
-        <p class="mb-6 text-lg font-semibold" style="color: #C9A24D;">عدد النتائج: {{ dramas.count }}</p>
+        <p class="mb-6 text-lg font-semibold" style="color: #C9A24D;">عدد النتائج: {{ dramas.paginator.count }}</p>
         
         <!-- Drama Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -160,7 +161,45 @@
                 <p class="text-2xl" style="color: #666;">لا توجد نتائج</p>
             </div>
             {% endfor %}
+       </div>
+
+        <!-- Pagination -->
+        {% if dramas.has_other_pages %}
+        <div class="flex justify-center gap-3 mt-12 flex-wrap">
+            
+            {% if dramas.has_previous %}
+            <a href="?page=1&country={{ request.GET.country }}&status={{ request.GET.status }}&genre={{ request.GET.genre }}&year={{ request.GET.year }}&search={{ request.GET.search }}" 
+               class="px-4 py-2 rounded-lg border font-bold transition hover:scale-105"
+               style="background-color: #1A1A1A; color: #C9A24D; border-color: rgba(201,162,77,0.3);">
+                الأول
+            </a>
+            <a href="?page={{ dramas.previous_page_number }}&country={{ request.GET.country }}&status={{ request.GET.status }}&genre={{ request.GET.genre }}&year={{ request.GET.year }}&search={{ request.GET.search }}" 
+               class="px-4 py-2 rounded-lg border font-bold transition hover:scale-105"
+               style="background-color: #1A1A1A; color: #C9A24D; border-color: rgba(201,162,77,0.3);">
+                السابق
+            </a>
+            {% endif %}
+
+            <span class="px-4 py-2 rounded-lg font-bold"
+                  style="background-color: #C9A24D; color: #0B0B0B;">
+                {{ dramas.number }} / {{ dramas.paginator.num_pages }}
+            </span>
+
+            {% if dramas.has_next %}
+            <a href="?page={{ dramas.next_page_number }}&country={{ request.GET.country }}&status={{ request.GET.status }}&genre={{ request.GET.genre }}&year={{ request.GET.year }}&search={{ request.GET.search }}" 
+               class="px-4 py-2 rounded-lg border font-bold transition hover:scale-105"
+               style="background-color: #1A1A1A; color: #C9A24D; border-color: rgba(201,162,77,0.3);">
+                التالي
+            </a>
+            <a href="?page={{ dramas.paginator.num_pages }}&country={{ request.GET.country }}&status={{ request.GET.status }}&genre={{ request.GET.genre }}&year={{ request.GET.year }}&search={{ request.GET.search }}" 
+               class="px-4 py-2 rounded-lg border font-bold transition hover:scale-105"
+               style="background-color: #1A1A1A; color: #C9A24D; border-color: rgba(201,162,77,0.3);">
+                الأخير
+            </a>
+            {% endif %}
+
         </div>
+        {% endif %}
         
     </div>
 </body>

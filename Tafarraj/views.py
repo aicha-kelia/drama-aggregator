@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q, Count
+from django.core.paginator import Paginator
 from .models import Drama, Genre, WatchLink
 
 
@@ -40,13 +41,24 @@ def drama_list(request):
             Q(title_original__icontains=search)
         )
     
+    # PAGINATION - Added here
+    paginator = Paginator(dramas, 50)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
     genres = Genre.objects.annotate(drama_count=Count('drama')).filter(drama_count__gt=0)
     years = Drama.objects.values_list('release_year', flat=True).distinct().order_by('-release_year')
     
     context = {
-        'dramas': dramas,
+        'page_obj': page_obj,      # Changed from dramas
+        'dramas': page_obj,         # Keep this so old template still works
         'genres': genres,
         'years': years,
+        'country': country,
+        'status': status,
+        'genre': genre,
+        'year': year,
+        'search': search,
     }
     return render(request, 'Tafarraj/drama_list.html', context)
 
